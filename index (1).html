@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>For My Darling · Kyle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush: #fff0f5;
+    --petal: #ffd6e6;
+    --rose: #ff9ec4;
+    --berry: #d9478a;
+    --ink: #5a2a43;
+    --cream: #fffafc;
+    --jax-purple: #8b5fbf;
+    --jax-ear: #b48ae0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Fredoka', system-ui, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 20% 10%, #ffe3ee 0, transparent 40%),
+      radial-gradient(circle at 80% 90%, #f3dcff 0, transparent 40%),
+      var(--blush);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* floating decorations */
+  .float { position: fixed; pointer-events: none; z-index: 0; opacity: .55; animation: drift 9s ease-in-out infinite; }
+  .float:nth-child(2) { animation-delay: -3s; }
+  .float:nth-child(3) { animation-delay: -6s; }
+  @keyframes drift { 0%,100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-18px) rotate(6deg); } }
+
+  header {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 56px 20px 24px;
+  }
+  h1 {
+    font-family: 'Gaegu', cursive;
+    font-size: clamp(2.6rem, 9vw, 4.6rem);
+    color: var(--berry);
+    line-height: 1;
+  }
+  .sub { margin-top: 10px; font-size: 1.05rem; opacity: .8; }
+
+  /* Jax mascot */
+  .jax-wrap { display: flex; justify-content: center; margin-top: 18px; }
+  .jax { width: 150px; height: auto; cursor: pointer; transition: transform .25s; }
+  .jax:hover { transform: rotate(-6deg) scale(1.06); }
+  .jax.hop { animation: hop .6s ease; }
+  @keyframes hop { 30% { transform: translateY(-26px) rotate(8deg); } 60% { transform: translateY(0); } 80% { transform: translateY(-8px); } }
+  .tap { font-size: .85rem; opacity: .6; margin-top: 4px; }
+
+  main { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 12px 18px 70px; }
+
+  .section-title {
+    font-family: 'Gaegu', cursive;
+    font-size: 2rem;
+    text-align: center;
+    color: var(--berry);
+    margin: 28px 0 18px;
+  }
+
+  .notes { display: grid; gap: 16px; }
+  .note {
+    position: relative;
+    background: var(--cream);
+    border: 3px solid var(--rose);
+    border-radius: 22px 22px 22px 6px;
+    padding: 20px 22px;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    box-shadow: 6px 6px 0 var(--petal);
+  }
+  .note:nth-child(even) { border-radius: 22px 22px 6px 22px; border-color: var(--jax-ear); box-shadow: 6px 6px 0 #eadcff; }
+  .note::before {
+    content: "♥"; position: absolute; top: -14px; right: 18px;
+    background: var(--blush); color: var(--berry); padding: 0 6px; font-size: 1.2rem;
+  }
+
+  .signature {
+    margin-top: 34px; text-align: center;
+    font-family: 'Gaegu', cursive; font-size: 2rem; color: var(--berry);
+  }
+  .signature small { display: block; font-family: 'Fredoka', sans-serif; font-size: .9rem; color: var(--ink); opacity: .65; margin-top: 4px; }
+
+  footer { position: relative; z-index: 1; text-align: center; padding: 0 0 36px; font-size: .85rem; opacity: .55; }
+
+  .heart { position: fixed; z-index: 5; pointer-events: none; font-size: 1.4rem; animation: rise 1.6s ease-out forwards; }
+  @keyframes rise { to { transform: translateY(-140px); opacity: 0; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .float, .jax.hop, .heart { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- floating decorations -->
+<svg class="float" style="top:8%;left:5%" width="44" height="44" viewBox="0 0 24 24"><path fill="#ff9ec4" d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.600-8 11-8 11z"/></svg>
+<svg class="float" style="top:55%;right:6%" width="38" height="38" viewBox="0 0 24 24"><path fill="#b48ae0" d="M12 2l2.600 6.400L21 9l-5 4.500L17.500 20 12 16.600 6.500 20 8 13.500 3 9l6.400-.6z"/></svg>
+<svg class="float" style="bottom:8%;left:8%" width="40" height="40" viewBox="0 0 24 24"><path fill="#ffb7d5" d="M12 21s-8-5.400-8-11a4.500 4.500 0 0 1 8-2.800A4.500 4.500 0 0 1 20 10c0 5.600-8 11-8 11z"/></svg>
+
+<header>
+  <h1>For My Darling</h1>
+  <p class="sub">Every word here is yours.</p>
+
+  <!-- Jax (TADC) — simple SVG rabbit; tap for a hop + hearts -->
+  <div class="jax-wrap">
+    <svg id="jax" class="jax" viewBox="0 0 200 230" role="img" aria-label="Jax the rabbit from The Amazing Digital Circus">
+      <!-- ears -->
+      <g>
+        <path d="M62 80 C40 20 48 6 66 8 C84 12 86 50 88 78 Z" fill="#b48ae0"/>
+        <path d="M66 70 C54 30 56 18 66 18 C74 20 76 44 78 70 Z" fill="#ffb7d5"/>
+        <!-- Jax's torn ear -->
+        <path d="M138 78 C150 40 162 16 150 6 L140 22 L132 8 C122 28 118 56 116 78 Z" fill="#b48ae0"/>
+        <path d="M134 70 C140 44 146 28 142 20 C132 34 130 54 128 70 Z" fill="#ffb7d5"/>
+      </g>
+      <!-- head -->
+      <ellipse cx="100" cy="132" rx="64" ry="62" fill="#b48ae0"/>
+      <!-- face patch -->
+      <path d="M100 100 C70 110 50 140 66 170 C84 192 116 192 134 170 C150 140 130 110 100 100 Z" fill="#fdf2fa"/>
+      <!-- eyes -->
+      <ellipse cx="78" cy="122" rx="12" ry="14" fill="#fff"/>
+      <ellipse cx="122" cy="122" rx="12" ry="14" fill="#fff"/>
+      <circle cx="80" cy="124" r="6" fill="#2b1738"/>
+      <circle cx="120" cy="124" r="6" fill="#2b1738"/>
+      <!-- smirk -->
+      <path d="M82 158 Q100 174 122 156" stroke="#2b1738" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <!-- teeth -->
+      <rect x="94" y="164" width="8" height="12" rx="2" fill="#fff" stroke="#2b1738" stroke-width="2"/>
+      <!-- nose -->
+      <ellipse cx="100" cy="144" rx="6" ry="4" fill="#ff7fb0"/>
+      <!-- blush -->
+      <ellipse cx="58" cy="146" rx="8" ry="5" fill="#ff9ec4" opacity=".7"/>
+      <ellipse cx="142" cy="146" rx="8" ry="5" fill="#ff9ec4" opacity=".7"/>
+    </svg>
+  </div>
+  <p class="tap">Tap Jax</p>
+</header>
+
+<main>
+  <h2 class="section-title">Notes from me to you</h2>
+
+  <section class="notes" id="notes">
+    <p class="note">I'll love you now and forever, darling.</p>
+    <p class="note">No matter what happened, I'll always be proud of you.</p>
+    <p class="note">You're never ever getting rid of me.</p>
+    <p class="note">Your smile lights up my days.</p>
+    <p class="note">I'm happy when you are, and I'm here when you need someone.</p>
+    <p class="note">You are the best thing that has ever happened to me.</p>
+    <p class="note">Forever grateful to be yours.</p>
+  </section>
+
+  <div class="signature">
+    — Kyle
+    <small>always yours</small>
+  </div>
+</main>
+
+<footer>Made with love by Kyle</footer>
+
+<script>
+  const jax = document.getElementById('jax');
+  const hearts = ['💗','💖','💕','🐰','✨'];
+  jax.addEventListener('click', (e) => {
+    jax.classList.remove('hop'); void jax.offsetWidth; jax.classList.add('hop');
+    const r = jax.getBoundingClientRect();
+    for (let i = 0; i < 6; i++) {
+      const h = document.createElement('span');
+      h.className = 'heart';
+      h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+      h.style.left = (r.left + r.width / 2 + (Math.random() * 120 - 60)) + 'px';
+      h.style.top = (r.top + 30 + Math.random() * 40) + 'px';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 1600);
+    }
+  });
+</script>
+</body>
+</html>

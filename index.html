@@ -31,3 +31,86 @@
   .jax-btn.hop { animation:hop .55s ease; }
   @keyframes hop { 30%{transform:translateY(-22px) rotate(6deg)} 60%{transform:translateY(0)} 80%{transform:translateY(-7px)} }
   .hint { margin-top:12px; font-size:.9rem; opacity:.65; }
+
+  .quote-box { max-width:520px; min-height:130px; margin:22px auto 0; display:flex; align-items:center; justify-content:center; }
+  .quote {
+    background:var(--cream); border:3px solid var(--rose); border-radius:22px 22px 22px 6px;
+    padding:20px 22px; font-size:1.25rem; line-height:1.5; box-shadow:6px 6px 0 var(--petal);
+    animation:pop .35s ease;
+  }
+  @keyframes pop { from{transform:scale(.85);opacity:0} to{transform:scale(1);opacity:1} }
+  .counter { margin-top:10px; font-size:.85rem; opacity:.6; }
+
+  .signature { margin-top:30px; font-family:'Gaegu',cursive; font-size:2rem; color:var(--berry); }
+  .signature small { display:block; font-family:'Fredoka',sans-serif; font-size:.9rem; color:var(--ink); opacity:.65; }
+
+  .heart { position:fixed; pointer-events:none; font-size:1.4rem; z-index:5; animation:rise 1.5s ease-out forwards; }
+  @keyframes rise { to{transform:translateY(-130px); opacity:0} }
+  @media (prefers-reduced-motion:reduce){ .float,.jax-btn.hop,.heart,.quote{animation:none} }
+</style>
+</head>
+<body>
+<svg class="float" style="top:8%;left:5%" width="44" height="44" viewBox="0 0 24 24"><path fill="#ff9ec4" d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z"/></svg>
+<svg class="float" style="top:58%;right:6%" width="38" height="38" viewBox="0 0 24 24"><path fill="#b48ae0" d="M12 2l2.6 6.4L21 9l-5 4.5L17.5 20 12 16.6 6.5 20 8 13.5 3 9l6.4-.6z"/></svg>
+<svg class="float" style="bottom:7%;left:8%" width="40" height="40" viewBox="0 0 24 24"><path fill="#ffb7d5" d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z"/></svg>
+
+<header>
+  <p class="for">Dedicated with all my love</p>
+  <h1>For My Dearest Wife</h1>
+  <p class="dedication">This little corner is yours. Jax is holding my words for you, so tap him whenever you need to hear them.</p>
+</header>
+
+<div class="stage">
+  <button class="jax-btn" id="jax" aria-label="Tap Jax to reveal a note">
+    <img src="jax.jpg" alt="Jax from The Amazing Digital Circus">
+  </button>
+  <p class="hint">Tap Jax</p>
+</div>
+
+<div class="quote-box" aria-live="polite">
+  <p class="quote" id="quote">Psst… tap me. I've got something for you. 💗</p>
+</div>
+<p class="counter" id="counter"></p>
+
+<div class="signature">— Kyle<small>always yours</small></div>
+
+<script>
+  const quotes = [
+    "I'll love you now and forever, darling.",
+    "No matter what happened, I'll always be proud of you.",
+    "You're never ever getting rid of me.",
+    "Your smile lights up my days.",
+    "I'm happy when you are, and I'm here when you need someone.",
+    "You are the best thing that has ever happened to me.",
+    "Forever grateful to be yours."
+  ];
+  let i = -1;
+  const jax = document.getElementById('jax');
+  const quote = document.getElementById('quote');
+  const counter = document.getElementById('counter');
+  const emojis = ['💗','💖','💕','🐰','✨'];
+
+  jax.addEventListener('click', () => {
+    i = (i + 1) % quotes.length;
+    // restart pop animation
+    const clone = quote.cloneNode(true);
+    clone.textContent = quotes[i];
+    quote.replaceWith(clone);
+    clone.id = 'quote';
+    counter.textContent = (i + 1) + ' of ' + quotes.length;
+
+    jax.classList.remove('hop'); void jax.offsetWidth; jax.classList.add('hop');
+    const r = jax.getBoundingClientRect();
+    for (let k = 0; k < 6; k++) {
+      const h = document.createElement('span');
+      h.className = 'heart';
+      h.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      h.style.left = (r.left + r.width/2 + (Math.random()*160-80)) + 'px';
+      h.style.top = (r.top + 30 + Math.random()*60) + 'px';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 1500);
+    }
+  });
+</script>
+</body>
+</html>

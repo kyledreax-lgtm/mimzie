@@ -8,75 +8,71 @@
 <style>
   :root { --blush:#fff0f5; --petal:#ffd6e6; --rose:#ff9ec4; --berry:#d9478a; --ink:#5a2a43; --cream:#fffafc; --lav:#b48ae0; }
   * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
-  html, body { touch-action:manipulation; -webkit-text-size-adjust:100%; }
-  .jax-btn, button { touch-action:manipulation; user-select:none; -webkit-user-select:none; }
+  html, body { height:100%; touch-action:manipulation; -webkit-text-size-adjust:100%; overflow:hidden; }
   body {
-    font-family:'Fredoka',system-ui,sans-serif; color:var(--ink); text-align:center;
+    font-family:'Fredoka',system-ui,sans-serif; color:var(--ink); text-align:center; user-select:none; -webkit-user-select:none;
     background: radial-gradient(circle at 15% 10%,#ffe3ee 0,transparent 45%),
                 radial-gradient(circle at 85% 90%,#f3dcff 0,transparent 45%), var(--blush);
-    min-height:100vh; overflow-x:hidden; padding:0 18px 40px;
   }
-  .float { position:fixed; pointer-events:none; opacity:.5; animation:drift 9s ease-in-out infinite; }
+  .float { position:fixed; pointer-events:none; opacity:.45; animation:drift 9s ease-in-out infinite; }
   @keyframes drift { 0%,100%{transform:translateY(0) rotate(-6deg)} 50%{transform:translateY(-18px) rotate(6deg)} }
 
-  header { padding:44px 0 10px; position:relative; }
-  .for { font-size:1rem; opacity:.75; }
-  h1 { font-family:'Gaegu',cursive; font-size:clamp(2.4rem,9vw,4.2rem); color:var(--berry); line-height:1.05; margin-top:6px; }
-  .dedication { max-width:480px; margin:14px auto 0; font-size:1.05rem; line-height:1.55; }
+  header { position:fixed; top:0; left:0; right:0; z-index:3; padding:22px 16px 0; pointer-events:none; }
+  .for { font-size:.95rem; opacity:.75; }
+  h1 { font-family:'Gaegu',cursive; font-size:clamp(2.2rem,8vw,3.8rem); color:var(--berry); line-height:1.05; margin-top:2px; }
+  .dedication { max-width:460px; margin:8px auto 0; font-size:1rem; line-height:1.45; }
+  .hint { margin-top:6px; font-size:.85rem; opacity:.6; }
 
-  .stage { position:relative; margin:26px auto 0; width:min(300px,78vw); }
-  .jax-btn { all:unset; cursor:pointer; display:block; border-radius:50%; width:100%; aspect-ratio:1; overflow:hidden;
-    border:6px solid var(--rose); box-shadow:8px 8px 0 var(--petal); transition:transform .2s; }
-  .jax-btn:focus-visible { outline:4px solid var(--berry); outline-offset:4px; }
-  .jax-btn img { width:100%; height:100%; object-fit:cover; display:block; }
-  .jax-btn:active { transform:scale(.96) rotate(-3deg); }
-  .jax-btn.hop { animation:hop .55s ease; }
-  @keyframes hop { 30%{transform:translateY(-22px) rotate(6deg)} 60%{transform:translateY(0)} 80%{transform:translateY(-7px)} }
-  .hint { margin-top:12px; font-size:.9rem; opacity:.65; }
+  #play { position:fixed; inset:0; z-index:1; overflow:hidden; }
 
-  .quote-box { max-width:520px; min-height:130px; margin:22px auto 0; display:flex; align-items:center; justify-content:center; }
-  .quote {
-    background:var(--cream); border:3px solid var(--rose); border-radius:22px 22px 22px 6px;
-    padding:20px 22px; font-size:1.25rem; line-height:1.5; box-shadow:6px 6px 0 var(--petal);
-    animation:pop .35s ease;
+  #smiley { position:absolute; left:0; top:0; z-index:1; will-change:transform; cursor:pointer; }
+  #smiley img { display:block; width:100%; height:100%; pointer-events:none; }
+
+  #jax { position:absolute; left:0; top:0; z-index:2; will-change:transform; cursor:pointer; }
+  #jax img { display:block; height:100%; width:auto; pointer-events:none; filter:drop-shadow(4px 6px 0 rgba(217,71,138,.18)); }
+
+  #bubble {
+    position:absolute; left:0; top:0; z-index:4; width:min(260px,72vw); pointer-events:none;
+    background:var(--cream); border:3px solid var(--rose); border-radius:20px;
+    padding:12px 16px; font-size:1.05rem; line-height:1.4; box-shadow:5px 5px 0 var(--petal);
+    opacity:0; transform:scale(.8); transition:opacity .2s, transform .2s;
   }
-  @keyframes pop { from{transform:scale(.85);opacity:0} to{transform:scale(1);opacity:1} }
-  .counter { margin-top:10px; font-size:.85rem; opacity:.6; }
+  #bubble.show { opacity:1; transform:scale(1); }
+  #bubble::after {
+    content:""; position:absolute; left:var(--tail,50%); bottom:-13px; width:18px; height:18px; margin-left:-9px;
+    background:var(--cream); border-right:3px solid var(--rose); border-bottom:3px solid var(--rose); transform:rotate(45deg);
+  }
 
-  .signature { margin-top:30px; font-family:'Gaegu',cursive; font-size:2rem; color:var(--berry); }
-  .signature small { display:block; font-family:'Fredoka',sans-serif; font-size:.9rem; color:var(--ink); opacity:.65; }
+  .signature { position:fixed; bottom:12px; left:0; right:0; z-index:3; pointer-events:none;
+    font-family:'Gaegu',cursive; font-size:1.7rem; color:var(--berry); }
+  .signature small { display:block; font-family:'Fredoka',sans-serif; font-size:.8rem; color:var(--ink); opacity:.6; }
 
-  .heart { position:fixed; pointer-events:none; font-size:1.4rem; z-index:5; animation:rise 1.5s ease-out forwards; }
-  @keyframes rise { to{transform:translateY(-130px); opacity:0} }
-  @media (prefers-reduced-motion:reduce){ .float,.jax-btn.hop,.heart,.quote{animation:none} }
+  .heart { position:fixed; pointer-events:none; font-size:1.4rem; z-index:6; animation:rise 1.4s ease-out forwards; }
+  @keyframes rise { to{transform:translateY(-110px); opacity:0} }
+  @media (prefers-reduced-motion:reduce){ .float,.heart{animation:none} }
 </style>
 </head>
 <body>
-<svg class="float" style="top:8%;left:5%" width="44" height="44" viewBox="0 0 24 24"><path fill="#ff9ec4" d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z"/></svg>
-<svg class="float" style="top:58%;right:6%" width="38" height="38" viewBox="0 0 24 24"><path fill="#b48ae0" d="M12 2l2.6 6.4L21 9l-5 4.5L17.5 20 12 16.6 6.5 20 8 13.5 3 9l6.4-.6z"/></svg>
-<svg class="float" style="bottom:7%;left:8%" width="40" height="40" viewBox="0 0 24 24"><path fill="#ffb7d5" d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z"/></svg>
+<svg class="float" style="top:30%;left:4%" width="40" height="40" viewBox="0 0 24 24"><path fill="#ff9ec4" d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z"/></svg>
+<svg class="float" style="top:62%;right:5%" width="34" height="34" viewBox="0 0 24 24"><path fill="#b48ae0" d="M12 2l2.6 6.4L21 9l-5 4.5L17.5 20 12 16.6 6.5 20 8 13.5 3 9l6.4-.6z"/></svg>
 
 <header>
   <p class="for">Dedicated with all my love</p>
   <h1>For My Dearest Wife</h1>
-  <p class="dedication">This little corner is yours. Jax is holding my words for you, so tap him whenever you need to hear them.</p>
+  <p class="dedication">This little corner is yours. Catch Jax and tap him to hear what I want to tell you.</p>
+  <p class="hint">Tap Jax 💗</p>
 </header>
 
-<div class="stage">
-  <button class="jax-btn" id="jax" aria-label="Tap Jax to reveal a note">
-    <img src="jax.jpg" alt="Jax from The Amazing Digital Circus">
-  </button>
-  <p class="hint">Tap Jax</p>
+<div id="play">
+  <div id="smiley"><img src="smiley.png" alt="Smiley"></div>
+  <div id="jax"><img src="jax-full.png" alt="Jax from The Amazing Digital Circus"></div>
+  <div id="bubble" aria-live="polite"></div>
 </div>
-
-<div class="quote-box" aria-live="polite">
-  <p class="quote" id="quote">Psst… tap me. I've got something for you. 💗</p>
-</div>
-<p class="counter" id="counter"></p>
 
 <div class="signature">— Kyle<small>always yours</small></div>
 
 <script>
+(() => {
   const quotes = [
     "I'll love you now and forever, darling.",
     "No matter what happened, I'll always be proud of you.",
@@ -86,30 +82,111 @@
     "You are the best thing that has ever happened to me.",
     "Forever grateful to be yours."
   ];
-  let i = -1;
+  let qi = -1;
+
+  const play = document.getElementById('play');
   const jax = document.getElementById('jax');
-  const quote = document.getElementById('quote');
-  const counter = document.getElementById('counter');
+  const smiley = document.getElementById('smiley');
+  const bubble = document.getElementById('bubble');
   const emojis = ['💗','💖','💕','🐰','✨'];
 
-  jax.addEventListener('click', () => {
-    i = (i + 1) % quotes.length;
-    quote.textContent = quotes[i];
-    quote.style.animation = 'none'; void quote.offsetWidth; quote.style.animation = '';
-    counter.textContent = (i + 1) + ' of ' + quotes.length;
+  let W, H, jH, jW, sS, topSafe;
+  function size() {
+    W = innerWidth; H = innerHeight;
+    jH = Math.max(170, Math.min(260, H * 0.3));
+    jW = jH * (443 / 900);
+    sS = Math.max(64, Math.min(100, W * 0.14));
+    topSafe = Math.min(H * 0.42, 230);   // keep Jax below the title, leave room for bubble
+    jax.style.height = jH + 'px'; jax.style.width = jW + 'px';
+    smiley.style.width = smiley.style.height = sS + 'px';
+  }
+  size(); addEventListener('resize', size);
 
-    jax.classList.remove('hop'); void jax.offsetWidth; jax.classList.add('hop');
-    const r = jax.getBoundingClientRect();
-    for (let k = 0; k < 6; k++) {
+  // Jax state
+  const J = { x: W/2 - jW/2, y: H*0.6, tx: 0, ty: 0, face: 1, wait: 0, talk: 0, t: 0 };
+  function newTarget() {
+    J.tx = Math.random() * (W - jW);
+    J.ty = topSafe + Math.random() * Math.max(10, H - jH - topSafe - 50);
+  }
+  newTarget();
+
+  // Smiley state
+  const S = { x: W*0.2, y: H*0.5, vx: 150, vy: 120, rot: 0, squish: 0 };
+
+  function say() {
+    qi = (qi + 1) % quotes.length;
+    bubble.textContent = quotes[qi];
+    bubble.classList.add('show');
+    J.talk = 4.5;            // seconds to stand still and talk
+    burst(J.x + jW/2, J.y + jH*0.2);
+  }
+  function burst(cx, cy) {
+    for (let k = 0; k < 5; k++) {
       const h = document.createElement('span');
       h.className = 'heart';
       h.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-      h.style.left = (r.left + r.width/2 + (Math.random()*160-80)) + 'px';
-      h.style.top = (r.top + 30 + Math.random()*60) + 'px';
+      h.style.left = (cx + Math.random()*80 - 40) + 'px';
+      h.style.top = (cy + Math.random()*30) + 'px';
       document.body.appendChild(h);
-      setTimeout(() => h.remove(), 1500);
+      setTimeout(() => h.remove(), 1400);
     }
-  });
+  }
+  jax.addEventListener('click', say);
+  smiley.addEventListener('click', () => { S.squish = 1; S.vx *= -1.15; S.vy *= 1.15; burst(S.x + sS/2, S.y); });
+
+  let last = performance.now();
+  function frame(now) {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    J.t += dt;
+
+    // --- Jax wanders ---
+    let bob = 0, tilt = 0;
+    if (J.talk > 0) {
+      J.talk -= dt;
+      tilt = Math.sin(J.t * 6) * 1.5;           // little happy wiggle while talking
+      if (J.talk <= 0) bubble.classList.remove('show');
+    } else if (J.wait > 0) {
+      J.wait -= dt;
+    } else {
+      const dx = J.tx - J.x, dy = J.ty - J.y, d = Math.hypot(dx, dy);
+      if (d < 6) { J.wait = 0.6 + Math.random() * 1.6; newTarget(); }
+      else {
+        const sp = Math.max(60, jH * 0.45);       // px per second
+        J.x += dx / d * sp * dt; J.y += dy / d * sp * dt;
+        if (Math.abs(dx) > 4) J.face = dx > 0 ? 1 : -1;
+        bob = -Math.abs(Math.sin(J.t * 9)) * 10;  // hop-walk
+        tilt = Math.sin(J.t * 9) * 3;
+      }
+    }
+    jax.style.transform = `translate(${J.x}px, ${J.y + bob}px) rotate(${tilt}deg) scaleX(${J.face})`;
+
+    // --- bubble follows Jax, stays on screen ---
+    const bw = bubble.offsetWidth, bh = bubble.offsetHeight;
+    let bx = J.x + jW/2 - bw/2;
+    bx = Math.max(8, Math.min(W - bw - 8, bx));
+    let by = J.y - bh - 16;
+    by = Math.max(8, by);
+    bubble.style.transform = '';
+    bubble.style.left = bx + 'px'; bubble.style.top = by + 'px';
+    bubble.style.setProperty('--tail', (J.x + jW/2 - bx) + 'px');
+
+    // --- Smiley bounces around ---
+    S.x += S.vx * dt; S.y += S.vy * dt; S.rot += S.vx * dt * 0.8;
+    if (S.x < 0)        { S.x = 0;        S.vx =  Math.abs(S.vx); S.squish = .6; }
+    if (S.x > W - sS)   { S.x = W - sS;   S.vx = -Math.abs(S.vx); S.squish = .6; }
+    if (S.y < 0)        { S.y = 0;        S.vy =  Math.abs(S.vy); S.squish = .6; }
+    if (S.y > H - sS)   { S.y = H - sS;   S.vy = -Math.abs(S.vy); S.squish = .6; }
+    // keep speed in a nice range after taps
+    const sp = Math.hypot(S.vx, S.vy);
+    if (sp > 320) { S.vx *= 320/sp; S.vy *= 320/sp; }
+    S.squish = Math.max(0, S.squish - dt * 3);
+    const sq = 1 + Math.sin(S.squish * Math.PI) * 0.25;
+    smiley.style.transform = `translate(${S.x}px, ${S.y}px) rotate(${S.rot}deg) scale(${sq}, ${2 - sq})`;
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>

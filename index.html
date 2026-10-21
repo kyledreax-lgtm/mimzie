@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>For My Dearest Wife · Kyle</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root { --blush:#fff0f5; --petal:#ffd6e6; --rose:#ff9ec4; --berry:#d9478a; --ink:#5a2a43; --cream:#fffafc; --lav:#b48ae0; }
-  * { box-sizing:border-box; margin:0; padding:0; }
+  * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+  html, body { touch-action:manipulation; -webkit-text-size-adjust:100%; }
+  .jax-btn, button { touch-action:manipulation; user-select:none; -webkit-user-select:none; }
   body {
     font-family:'Fredoka',system-ui,sans-serif; color:var(--ink); text-align:center;
     background: radial-gradient(circle at 15% 10%,#ffe3ee 0,transparent 45%),
@@ -92,11 +94,8 @@
 
   jax.addEventListener('click', () => {
     i = (i + 1) % quotes.length;
-    // restart pop animation
-    const clone = quote.cloneNode(true);
-    clone.textContent = quotes[i];
-    quote.replaceWith(clone);
-    clone.id = 'quote';
+    quote.textContent = quotes[i];
+    quote.style.animation = 'none'; void quote.offsetWidth; quote.style.animation = '';
     counter.textContent = (i + 1) + ' of ' + quotes.length;
 
     jax.classList.remove('hop'); void jax.offsetWidth; jax.classList.add('hop');
